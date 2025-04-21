@@ -51,13 +51,13 @@ int main()
             handleAddContact();
             break;
         case 2:
-            // TODO
+            handleSearchContact();
             break;
         case 3:
             handleDeleteContact();
             break;
         case 4:
-            // TODO
+            handleEditContact();
             break;
         case 5:
             handleDisplayContacts();

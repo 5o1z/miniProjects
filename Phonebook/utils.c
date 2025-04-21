@@ -58,19 +58,31 @@ void deleteContact(Contact *notes[], uint8_t indexToDelete, uint8_t *currentCoun
     }
 
     free(notes[indexToDelete]);
-    notes[indexToDelete] = NULL;
 
+    // Shift remaining contacts to fill the gap
     for (uint8_t i = indexToDelete; i < (*currentCount) - 1; i++)
     {
-        // Update the index by shifting the contact pointers to fill the gap;
-        // this does not copy or move the contact data in memory.
         notes[i] = notes[i + 1];
     }
 
-    free(notes[*currentCount - 1]); // Free the last contact
+    // Set the last pointer to NULL
     notes[*currentCount - 1] = NULL;
 
+    // Decrease the count
     (*currentCount)--;
 
     printf("Contact deleted successfully.\n");
+}
+
+void searchContact(Contact *notes[], const char *name, uint8_t currentCount)
+{
+    for (uint8_t i = 0; i < currentCount; i++)
+    {
+        if (strcmp(notes[i]->name, name) == 0)
+        {
+            printf("Contact found: %s - %s\n", notes[i]->name, notes[i]->phone);
+            return;
+        }
+    }
+    printf("Contact not found.\n");
 }

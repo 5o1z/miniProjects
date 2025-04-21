@@ -85,3 +85,45 @@ void handleDisplayContacts()
 
     printf("+-----+-%.*s-+-%.*s-+\n", NAME_LENGTH - 1, "--------------------------------------------------", PHONE_LENGTH - 1, "---------------");
 }
+
+// Handler for searching a contact
+void handleSearchContact()
+{
+    char searchName[NAME_LENGTH];
+    printf("Enter the name of the contact to search: ");
+    fgets(searchName, NAME_LENGTH, stdin);
+    searchName[strcspn(searchName, "\n")] = 0;
+
+    searchContact(notes, searchName, index);
+    return;
+}
+
+void handleEditContact()
+{
+    printf("All current contacts:\n");
+    handleDisplayContacts();
+
+    printf("Enter the index of the contact to edit: ");
+    uint8_t editIndex;
+    read_int(&editIndex);
+    editIndex--; // Convert to 0-based index
+
+    if (editIndex >= index)
+    {
+        printf("Invalid contact index.\n");
+        return;
+    }
+
+    char newName[NAME_LENGTH];
+    char newPhone[PHONE_LENGTH];
+
+    printf("Enter new name: ");
+    fgets(newName, NAME_LENGTH, stdin);
+    newName[strcspn(newName, "\n")] = 0;
+
+    printf("Enter new phone number: ");
+    fgets(newPhone, PHONE_LENGTH, stdin);
+    newPhone[strcspn(newPhone, "\n")] = 0;
+
+    addContact(notes[editIndex], newName, newPhone);
+}
